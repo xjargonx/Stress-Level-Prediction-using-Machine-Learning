@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stress Predictor (Flask)</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; text-align: center; padding: 40px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #007bff; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 15px; width: 100%; }
+        button:hover { background-color: #218838; }
+        .result { margin-top: 30px; font-size: 28px; font-weight: bold; color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stress Level Prediction Model (Flask)</h1>
+
+        <form action="/predict" method="post">
+            <div class="input-group">
+                <label for="sleep_duration">Sleep Duration (Hours)</label>
+                <input type="text" name="sleep_duration" id="sleep_duration" placeholder="e.g., 7.5" required
+                       value="{{ request.form.sleep_duration if request.method == 'POST' else '' }}">
+            </div>
+            
+            <div class="input-group">
+                <label for="activity_minutes">Physical Activity (Minutes/Day)</label>
+                <input type="text" name="activity_minutes" id="activity_minutes" placeholder="e.g., 60" required
+                       value="{{ request.form.activity_minutes if request.method == 'POST' else '' }}">
+            </div>
+
+            <div class="input-group">
+                <label for="heart_rate">Heart Rate (bpm)</label>
+                <input type="text" name="heart_rate" id="heart_rate" placeholder="e.g., 65" required
+                       value="{{ request.form.heart_rate if request.method == 'POST' else '' }}">
+            </div>
+
+            <div class="input-group">
+                <label for="daily_steps">Daily Steps</label>
+                <input type="text" name="daily_steps" id="daily_steps" placeholder="e.g., 10000" required
+                       value="{{ request.form.daily_steps if request.method == 'POST' else '' }}">
+            </div>
+            
+            <button type="submit">Get Stress Prediction</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
